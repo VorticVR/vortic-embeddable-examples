@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Free</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        iframe {
+            height: 100vh;
+            width: 100vw;
+        }
+.btn-wrapper {
+  display: flex;
+  margin: 20px;
+  padding: 10px;
+}
+.btn-wrapper button {
+  margin: 20px;
+  padding: 10px;
+}
+    </style>
+
+</head>
+<body>
+<h2>HTML at top</h2>
+<img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Trulli" width="500" height="333">
+<div class="btn-wrapper">
+  <button onClick="selectArtwork()">Select first artwork</button>
+  <button onClick="collapseIframe()">Collapse Iframe</button>
+  <button onClick="openIframe()">Open Iframe</button>
+  <button onClick="gotToArtwork()">Go to artwork</button>
+  <button onClick="gotoArtworkandOpenIframe()">Go to artwork openIframe</button>
+
+</div>
+<div class="iframe-wrapper">
+     <iframe src="https://312c-182-180-59-151.ngrok.io/#e=4452"
+            id="myIframe"
+            style="border: 1px solid red; top:0; left: 0; min-height: 49px; max-height: 100vh;" width="100%" height="100%"
+            title="V2 QR sss" allowFullScreen="true" frameBorder="0"></iframe>
+</div>
+
+<h2>Image at bottom</h2>
+<img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Trulli" width="500" height="333">
+
+<script type="text/javascript"  src="https://vortic-static-content.s3.eu-west-2.amazonaws.com/resizer.min.js"></script>
+<script type="text/javascript">
+
+function collapseIframe() {
+  sendMessageToIframe('collapseIframe')
+}
+function openIframe() {
+  sendMessageToIframe('openIframe')
+}
+function selectArtwork() {
+  sendMessageToIframe('selectArtwork')
+}
+function gotToArtwork() {
+sendMessageToIframe(JSON.stringify({type: 'gotToArtwork', artworkId: 9053}))
+}
+function gotoArtworkandOpenIframe() {
+sendMessageToIframe(JSON.stringify({type: 'gotoArtworkandOpenIframe', artworkId: 9053}))
+
+}
+  function sendMessageToIframe(message){
+    const newWindow = document.getElementById("myIframe").contentWindow
+    newWindow.window.postMessage(message,"*")
+  }
+  iFrameResize({
+    log: true, // Enable console logging
+    inPageLinks: true,
+    autoResize: false,
+    enablePublicMethods: true,
+    onMessage: function (messageData) {
+      console.log('messageData.origin = ', messageData)
+      if(messageData.message === "getParentHeight") {
+        // alert(messageData.message)
+        document.getElementById('myIframe').iFrameResizer.sendMessage({type: 'setParentHeight', value: window.innerHeight}, '*')
+      }
+      else if(messageData.message === "enterFullScreen") {
+        // alert(messageData.message)
+        document.getElementById('myIframe').style.position = "absolute";
+      }
+      else if(messageData.message === "clicked")
+      {
+        console.log('Data has been reciived')
+        const newWindow = document.getElementById("myIframe").contentWindow
+        newWindow.alert('messageData.message')
+
+      }
+      else if(messageData.message === "exitFullScreen") {
+        // alert(messageData.message)
+        document.getElementById('myIframe').style.position = "relative";
+      }
+    },
+  }, '#myIframe')
+</script>
+</body>
+</html>

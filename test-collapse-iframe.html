@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>test collapse iframe</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .iframe-wrapper {
+            height: 100vh;
+            width: 100vw;
+        }
+        .btn-wrapper {
+            display: flex;
+        }
+        .btn-wrapper button {
+            padding: 20px;
+            margin: 20px;
+        }
+
+    </style>
+</head>
+<body>
+<div id="root">
+    <div class="btn-wrapper">
+        <button onclick="onCollapse()" id="collapse" type="button">Collapse</button>
+        <button id="expand" onclick="onExpand()" type="button">Expand</button>
+    </div>
+    <div id="collapseContent" style="display: none">
+        <h2>Image at bottom</h2>
+        <img src="https://www.w3schools.com/html/pic_trulli.jpg" alt="Trulli" width="500" height="333">
+    </div>
+</div>
+<script>
+    const collapse = document.getElementById('collapse');
+    const expand = document.getElementById('expand');
+    const collapseContent = document.getElementById('collapseContent');
+
+    function onCollapse() {
+      collapseContent.style.display = "none";
+    }
+    function onExpand() {
+      collapseContent.style.display = "block";
+    }
+
+
+</script>
+</body>
+</html>

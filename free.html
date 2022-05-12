@@ -43,11 +43,12 @@
   <button onClick="openIframe()">Open Iframe</button>
   <button onClick="gotToArtwork()">Go to artwork</button>
   <button onClick="gotoArtworkandOpenIframe()">Go to artwork openIframe</button>
+  <button onClick="getCollapsedState()">Get collapsed state</button>
 
 </div>
 <div class="iframe-wrapper">
 <!--     <iframe src="https://bf38-182-180-59-151.eu.ngrok.io/#e=2811"-->
-      <iframe src="https://embed-dev.vortic.io/#e=4452"
+      <iframe src="http://localhost:3000/#e=4452"
             id="myIframe"
             style="border: 1px solid red; top:0; left: 0; min-height: 49px; max-height: 100vh;" width="100%" height="100%"
             title="V2 QR sss" allowFullScreen="true" frameBorder="0"></iframe>
@@ -74,6 +75,9 @@ sendMessageToIframe(JSON.stringify({type: 'gotToArtwork', artworkId: 9053}))
 function gotoArtworkandOpenIframe() {
 sendMessageToIframe(JSON.stringify({type: 'gotoArtworkandOpenIframe', artworkId: 9053}))
 
+}
+function getCollapsedState() {
+  sendMessageToIframe('getCollapsedState')
 }
   function sendMessageToIframe(message){
     const newWindow = document.getElementById("myIframe").contentWindow
@@ -111,6 +115,17 @@ sendMessageToIframe(JSON.stringify({type: 'gotoArtworkandOpenIframe', artworkId:
         document.querySelector('body').style.maxHeight = "auto";
         document.querySelector('body').style.overflow = "unset";
 
+      }
+      else if(messageData.message.includes("setCollapsedState")) {
+        try {
+          const data = JSON.parse(messageData.message)
+          console.log('data = ', data, data.collapsedState)
+          alert(`Collapsed state = ${data.collapsedState.toString()}`)
+        }
+        catch (e) {
+          console.error('Err = ', e)
+        }
+        // alert(`setCollapsedState = ${messageData.message}`)
       }
     },
   }, '#myIframe')

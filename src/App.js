@@ -4,6 +4,7 @@ import Iframe from "./componnets/Iframe";
 
 function App() {
   const [count, setCount] = useState(0);
+  const [collapsedState, setCollapsedState] = useState(true);
 
   const increment = () => {
     setCount(count+1);
@@ -22,8 +23,12 @@ function App() {
         <button onClick={increment}>Increment</button>
         <button onClick={decrement}>Decrement</button>
       </div>
+      <div>
+        Embeder is <b>{collapsedState ? "collapsed" : 'not collapsed'}</b> right now.
+      </div>
       <Iframe
         src="https://embed-dev.vortic.io/#e=4452"
+        setCollapsedState={setCollapsedState}
       />
     </div>
   );

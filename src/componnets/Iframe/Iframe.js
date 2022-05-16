@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import IframeResizer from 'iframe-resizer-react'
 
-const Iframe = ({src}) => {
+const Iframe = ({src, setCollapsedState}) => {
   const iframeRef = useRef(null)
 
   const onMessage = (messageData) => {
@@ -36,6 +36,7 @@ const Iframe = ({src}) => {
       try {
         const data = JSON.parse(messageData.message)
         console.log('data = ', data, data.collapsedState)
+        setCollapsedState(data.collapsedState)
         // alert(`Collapsed state = ${data.collapsedState.toString()}`)
       }
       catch (e) {
